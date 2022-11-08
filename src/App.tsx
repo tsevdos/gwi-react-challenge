@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { FC } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Layout } from "antd";
+import Home from "./views/Home";
+import Cats from "./views/Cats";
+import Header from "./components/Header";
 
-function App() {
+const { Content } = Layout;
+
+// Create react query client
+const queryClient = new QueryClient();
+
+const App: FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <Layout className="layout-container">
+          <Header />
+          <Layout className="layout-content">
+            <Content className="inner-content">
+              <Routes>
+                <Route path="/cats" element={<Cats />} />
+                <Route path="/" element={<Home />} />
+              </Routes>
+              <footer>
+                Made with{" "}
+                <span role="img" aria-label="love">
+                  ❤️
+                </span>{" "}
+                in Athens, Greece.
+              </footer>
+            </Content>
+          </Layout>
+        </Layout>
+      </Router>
+    </QueryClientProvider>
   );
-}
+};
 
 export default App;
