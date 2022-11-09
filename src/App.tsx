@@ -2,9 +2,8 @@ import { FC } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Layout } from "antd";
-import Home from "./views/Home";
-import Cats from "./views/Cats";
-import Header from "./components/Header";
+import { Header } from "./components/";
+import { Home, Cats } from "./views/";
 
 const { Content } = Layout;
 

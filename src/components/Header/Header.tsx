@@ -18,7 +18,7 @@ const menuItems = [
 const AppHeader: FC = () => {
   const { pathname } = useLocation();
   const selectedkey = pathname.replace(/\//g, "");
-  // console.log(selectedkey);
+  console.log(selectedkey);
 
   return (
     <Header className="header">
@@ -29,7 +29,7 @@ const AppHeader: FC = () => {
         <Menu
           theme="dark"
           mode="horizontal"
-          // selectedKeys={[selectedkey]}
+          selectedKeys={[selectedkey]}
           style={{ minWidth: 0, flex: "auto" }}
           items={menuItems}
         />

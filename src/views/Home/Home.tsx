@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Typography } from "antd";
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 const Home: FC = () => {
   return (
     <>

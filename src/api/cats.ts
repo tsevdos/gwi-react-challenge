@@ -1,8 +1,15 @@
 import { client } from "./client";
-import { Cat } from "../types/cats";
+import { endpoints } from "../utils/constants";
+import { Cat, CatsAPIOptions } from "../types/cats";
 
-export const getRandomCats = async (queryStr = ""): Promise<Cat[]> => {
-  const res = await client.get("https://api.thecatapi.com/v1/images/search?page=1&limit=10&order=RAND");
+export const getRandomCats = async ({ page, limit, order }: CatsAPIOptions): Promise<Cat[]> => {
+  const res = await client.get(`${endpoints.root}${endpoints.search}?page=${page}&limit=${limit}&order=${order}`);
+
+  return res.data;
+};
+
+export const getCatById = async (id: string): Promise<Cat> => {
+  const res = await client.get(`${endpoints.root}${endpoints.images}/${id}`);
 
   return res.data;
 };
