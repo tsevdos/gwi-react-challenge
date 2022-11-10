@@ -2,7 +2,6 @@ import { FC, MouseEvent, useEffect } from "react";
 import { Button, Spin } from "antd";
 import { useSearchParams } from "react-router-dom";
 import { useCatsStore } from "../../stores/";
-import { Cat } from "../../types/cats";
 import { getRandomCats, getCatById } from "../../api/cats";
 import { CatCard, CatModal } from "../../components/";
 import styles from "./Cats.module.css";
@@ -62,7 +61,8 @@ const Cats: FC = () => {
 
       lodalSelectedCat();
     }
-  }, [selectedCatID, getSelectedCat, setSelectedCatStatus]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -75,12 +75,14 @@ const Cats: FC = () => {
           Load more...
         </Button>
       </div>
-      <CatModal
-        {...(selectedCat as Cat)}
-        status={selectedCatStatus}
-        isOpen={Boolean(selectedCatID)}
-        onCancel={resetSelectedCat}
-      />
+      {selectedCatID && selectedCat && (
+        <CatModal
+          {...selectedCat}
+          status={selectedCatStatus}
+          isOpen={Boolean(selectedCatID)}
+          onCancel={resetSelectedCat}
+        />
+      )}
     </>
   );
 };

@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Layout } from "antd";
 import { Header } from "./components/";
-import { Home, Cats } from "./views/";
+import { Home, Cats, Breeds } from "./views/";
+import { paths } from "./utils/constants";
 
 const { Content } = Layout;
 
@@ -14,13 +15,14 @@ const App: FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
-        <Layout className="layout-container">
+        <Layout>
           <Header />
-          <Layout className="layout-content">
+          <Layout>
             <Content className="inner-content">
               <Routes>
-                <Route path="/cats" element={<Cats />} />
-                <Route path="/" element={<Home />} />
+                <Route path={paths.cats} element={<Cats />} />
+                <Route path={paths.breeds} element={<Breeds />} />
+                <Route path={paths.home} element={<Home />} />
               </Routes>
               <footer>
                 Made with{" "}

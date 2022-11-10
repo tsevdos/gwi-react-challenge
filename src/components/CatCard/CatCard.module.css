@@ -28,8 +28,3 @@
   object-fit: cover;
   height: max(10rem, 30vh);
 }
-
-.modalImg {
-  width: 100%;
-  margin: 0 0 1rem;
-}

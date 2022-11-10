@@ -8,7 +8,7 @@ export type Cat = {
   height: number;
 };
 
-type Breed = {
+export type Breed = {
   adaptability: number;
   affection_level: number;
   alt_names: string;
@@ -47,4 +47,12 @@ type Breed = {
     metric: string;
   };
   wikipedia_url: string;
+  cfa_url?: string;
+  vcahospitals_url?: string;
+  image?: {
+    id: string;
+    url: string;
+    width: number;
+    height: number;
+  };
 };
