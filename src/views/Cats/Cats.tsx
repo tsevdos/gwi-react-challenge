@@ -1,89 +1,98 @@
-import { FC, MouseEvent, useEffect } from "react";
-import { Button, Spin } from "antd";
+import { FC, MouseEvent, useEffect, useState } from "react";
+import { Button } from "antd";
 import { useSearchParams } from "react-router-dom";
-import { useCatsStore } from "../../stores/";
 import { getRandomCats, getCatById } from "../../api/cats";
-import { CatCard, CatModal } from "../../components/";
-import styles from "./Cats.module.css";
+import { CatCard, CatModal } from "./components/";
+import { Loader, LoaderWrapper } from "../../components/";
+import { usePromise } from "../../hooks";
+import { Cat, CatsAPIOptions, Status } from "../../types";
+import styles from "./styles.module.css";
+
+const randomCatsApiOptions = {
+  page: 1,
+  limit: 10,
+  order: "RAND",
+};
 
 const Cats: FC = () => {
-  const {
-    apiOptions,
-    cats: { status, entries },
-    changePage,
-    loadMoreCats,
-    setStatus,
-    selectedCat: { status: selectedCatStatus, entry: selectedCat },
-    getSelectedCat,
-    setSelectedCatStatus,
-    removeSelectedCat,
-  } = useCatsStore();
-  const { page, limit, order } = apiOptions;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedCatID = searchParams.get("catID");
-
-  const fetchNextPage = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    changePage(page + 1);
-  };
-
-  const resetSelectedCat = () => {
-    removeSelectedCat();
-    setSearchParams({});
-  };
+  const [catsState, setCatsState] = useState<{
+    status: Status;
+    cats: Cat[];
+  }>({ status: "loading", cats: [] });
+  const [currentPage, setCurrentPage] = useState(randomCatsApiOptions.page);
+  const [selectedCat, setSelectedCat] = useState<Cat | null>(null);
+  const { data: images } = usePromise(getRandomCats, randomCatsApiOptions);
 
   useEffect(() => {
-    const loadCats = async () => {
-      setStatus("loading");
-      try {
-        const data = await getRandomCats({ page, limit, order });
-        loadMoreCats(data);
-        setStatus("success");
-      } catch (error) {
-        setStatus("error");
-      }
-    };
-
-    loadCats();
-  }, [page, limit, order, setStatus, loadMoreCats]);
+    if (images) {
+      setCatsState((state) => ({ status: "success", cats: [...state.cats, ...images] }));
+    }
+  }, [images]);
 
   useEffect(() => {
     if (selectedCatID) {
       const lodalSelectedCat = async () => {
-        try {
-          const cat = await getCatById(selectedCatID);
-          getSelectedCat(cat);
-          setSelectedCatStatus("success");
-        } catch (error) {
-          setSelectedCatStatus("error");
-        }
+        const catData = await getCatById(selectedCatID);
+        setSelectedCat(catData);
       };
 
       lodalSelectedCat();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [selectedCatID]);
+
+  const fetchNextPage = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const nextPage = currentPage + 1;
+    setCurrentPage(nextPage);
+
+    setCatsState((state) => ({ ...state, status: "loading" }));
+    try {
+      const cats = await getRandomCats({ ...(randomCatsApiOptions as CatsAPIOptions), page: nextPage });
+      setCatsState((state) => ({ status: "success", cats: [...state.cats, ...cats] }));
+    } catch (error) {
+      setCatsState((state) => ({ ...state, status: "error" }));
+    }
+  };
+
+  const handleSelectCat = (e: MouseEvent<HTMLAnchorElement>, data: Cat) => {
+    e.preventDefault();
+    setSelectedCat(data);
+    setSearchParams({ catID: data.id });
+  };
+  const handleDeselectCat = (e: MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    setSelectedCat(null);
+    setSearchParams({});
+  };
 
   return (
-    <>
-      <div className={styles.wrapper}>
-        {Boolean(entries.length) && entries.map((cat) => <CatCard key={cat.id} {...cat} />)}
-      </div>
-      <div className={styles.loadingWrapper}>{status === "loading" && <Spin size="large" />}</div>
-      <div className={styles.moreWrapper}>
-        <Button type="primary" size="large" loading={status === "loading"} onClick={fetchNextPage}>
-          Load more...
-        </Button>
-      </div>
-      {selectedCatID && selectedCat && (
-        <CatModal
-          {...selectedCat}
-          status={selectedCatStatus}
-          isOpen={Boolean(selectedCatID)}
-          onCancel={resetSelectedCat}
-        />
+    <div>
+      <LoaderWrapper isLoading={catsState.cats.length === 0}>
+        <div className={styles.wrapper}>
+          {catsState.cats?.map((cat) => (
+            <CatCard key={cat.id} {...cat} onSelectCat={handleSelectCat} />
+          ))}
+        </div>
+      </LoaderWrapper>
+
+      {Boolean(catsState.cats.length) && (
+        <div className={styles.moreWrapper}>
+          {catsState.status === "loading" && <Loader />}
+          <div className={styles.moreBtn}>
+            <Button type="primary" size="large" loading={catsState.status === "loading"} onClick={fetchNextPage}>
+              Load more...
+            </Button>
+          </div>
+        </div>
       )}
-    </>
+
+      {Boolean(selectedCat) && (
+        <CatModal {...(selectedCat as Cat)} isOpen={Boolean(selectedCat)} onDeselectCat={handleDeselectCat} />
+      )}
+    </div>
   );
 };
 

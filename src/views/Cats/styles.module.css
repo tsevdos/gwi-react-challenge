@@ -1,0 +1,16 @@
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.moreWrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 1.5rem;
+}
+
+.moreBtn {
+  margin: 1.5rem;
+  display: flex;
+  justify-content: center;
+}

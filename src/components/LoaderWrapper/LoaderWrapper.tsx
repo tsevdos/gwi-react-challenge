@@ -4,12 +4,13 @@ import { Status } from "../../types";
 import { Loader } from "../";
 
 type LoaderWrapperProps = {
-  status: Status;
+  status?: Status;
+  isLoading?: boolean;
   children: Exclude<null | undefined | any, ReactNode>;
 };
 
-const LoaderWrapper: FC<LoaderWrapperProps> = ({ status, children }) => {
-  if (status === "loading") {
+const LoaderWrapper: FC<LoaderWrapperProps> = ({ status, isLoading = false, children }) => {
+  if (status === "loading" || isLoading) {
     return <Loader />;
   }
 

@@ -1,20 +1,16 @@
-import { useState, useEffect, FC, MouseEvent } from "react";
+import { useState, FC, MouseEvent } from "react";
 import { Typography } from "antd";
 import { ListItem, BreedsModal } from "./components/";
 import { LoaderWrapper } from "../../components/";
 import { getBreeds } from "../../api/cats";
-import styles from "./styles.module.css";
-import { Breed, Status } from "../../types/";
+import { Breed } from "../../types/";
+import { usePromise } from "../../hooks";
 
 const { Title } = Typography;
 
 const Breeds: FC = () => {
-  const [breedsData, setBreedsData] = useState<{
-    status: Status;
-    breeds: Breed[] | null;
-  }>({ status: "loading", breeds: null });
-  const { status, breeds } = breedsData;
   const [selectedBreed, setSelectedBreed] = useState<Breed | null>(null);
+  const { status, data: breeds } = usePromise(getBreeds);
 
   const handleSelectBreed = (e: MouseEvent<HTMLAnchorElement>, data: Breed) => {
     e.preventDefault();
@@ -25,21 +21,8 @@ const Breeds: FC = () => {
     setSelectedBreed(null);
   };
 
-  useEffect(() => {
-    const loadBreeds = async () => {
-      try {
-        const data = await getBreeds();
-        setBreedsData({ status: "success", breeds: data });
-      } catch (error) {
-        setBreedsData({ status: "error", breeds: null });
-      }
-    };
-
-    loadBreeds();
-  }, []);
-
   return (
-    <div className={styles.wrapper}>
+    <div>
       <Title level={2}>Breeds</Title>
       <LoaderWrapper status={status}>
         <ul>
