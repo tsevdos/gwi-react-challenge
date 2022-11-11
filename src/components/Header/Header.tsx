@@ -18,7 +18,7 @@ const menuItems = [
 
 const AppHeader: FC = () => {
   const { pathname } = useLocation();
-  const selectedkey = pathname.replace(/\//g, "");
+  const selectedkey = pathname.split("/")[1];
 
   return (
     <Header className="header">

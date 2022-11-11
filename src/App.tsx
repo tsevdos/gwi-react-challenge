@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Layout } from "antd";
 import { Header } from "./components/";
-import { Home, Cats, Breeds } from "./views/";
+import { Home, Cats, CatModal, Breeds, BreedsModal } from "./views/";
 import { paths } from "./utils/constants";
 
 const { Content } = Layout;
@@ -20,8 +20,12 @@ const App: FC = () => {
           <Layout>
             <Content className="inner-content">
               <Routes>
-                <Route path={paths.cats} element={<Cats />} />
-                <Route path={paths.breeds} element={<Breeds />} />
+                <Route path={paths.cats} element={<Cats />}>
+                  <Route path=":id" element={<CatModal />} />
+                </Route>
+                <Route path={paths.breeds} element={<Breeds />}>
+                  <Route path=":id" element={<BreedsModal />} />
+                </Route>
                 <Route path={paths.home} element={<Home />} />
               </Routes>
               <footer>

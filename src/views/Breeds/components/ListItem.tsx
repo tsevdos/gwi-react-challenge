@@ -1,22 +1,22 @@
-import { FC, MouseEvent } from "react";
-import styles from "./styles.module.css";
+import { FC } from "react";
+import { Link } from "react-router-dom";
+import useCatsStore from "../../../stores/cats";
+import { paths } from "../../../utils/constants";
 import { Breed } from "../../../types";
+import styles from "./styles.module.css";
 
-type ListItemProps = Breed & {
-  onSelectBreed: (e: MouseEvent<HTMLAnchorElement>, breed: Breed) => void;
-};
-
-const ListItem: FC<ListItemProps> = ({ onSelectBreed, ...breed }) => {
-  const { id, name } = breed;
-  const handleSelectBreed = (e: MouseEvent<HTMLAnchorElement>) => {
-    onSelectBreed(e, breed);
+const ListItem: FC<Breed> = (props) => {
+  const { id, name } = props;
+  const { selectBreed } = useCatsStore();
+  const handleSelectBreed = () => {
+    selectBreed(props);
   };
 
   return (
     <li key={id} className={styles.listItem}>
-      <a href="!#" onClick={handleSelectBreed}>
+      <Link to={`${paths.breeds}/${id}`} title={`cat ${id}`} onClick={handleSelectBreed}>
         {name}
-      </a>
+      </Link>
     </li>
   );
 };

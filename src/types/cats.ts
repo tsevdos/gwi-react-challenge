@@ -2,10 +2,10 @@ export type CatsAPIOptions = { page: number; limit: number; order: "ASC" | "DESC
 
 export type Cat = {
   id: string;
-  breeds: Breed[];
   url: string;
   width: number;
   height: number;
+  breeds: Breed[];
 };
 
 export type Breed = {

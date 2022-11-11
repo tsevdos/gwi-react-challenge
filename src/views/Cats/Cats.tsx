@@ -1,8 +1,8 @@
 import { FC, MouseEvent, useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
 import { Button } from "antd";
-import { useSearchParams } from "react-router-dom";
-import { getRandomCats, getCatById } from "../../api/cats";
-import { CatCard, CatModal } from "./components/";
+import { getRandomCats } from "../../api/cats";
+import { CatCard } from "./components/";
 import { Loader, LoaderWrapper } from "../../components/";
 import { usePromise } from "../../hooks";
 import { Cat, CatsAPIOptions, Status } from "../../types";
@@ -15,15 +15,11 @@ const randomCatsApiOptions = {
 };
 
 const Cats: FC = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [searchParams, setSearchParams] = useSearchParams();
-  const selectedCatID = searchParams.get("catID");
   const [catsState, setCatsState] = useState<{
     status: Status;
     cats: Cat[];
   }>({ status: "loading", cats: [] });
   const [currentPage, setCurrentPage] = useState(randomCatsApiOptions.page);
-  const [selectedCat, setSelectedCat] = useState<Cat | null>(null);
   const { data: images } = usePromise(getRandomCats, randomCatsApiOptions);
 
   useEffect(() => {
@@ -31,17 +27,6 @@ const Cats: FC = () => {
       setCatsState((state) => ({ status: "success", cats: [...state.cats, ...images] }));
     }
   }, [images]);
-
-  useEffect(() => {
-    if (selectedCatID) {
-      const lodalSelectedCat = async () => {
-        const catData = await getCatById(selectedCatID);
-        setSelectedCat(catData);
-      };
-
-      lodalSelectedCat();
-    }
-  }, [selectedCatID]);
 
   const fetchNextPage = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -57,23 +42,12 @@ const Cats: FC = () => {
     }
   };
 
-  const handleSelectCat = (e: MouseEvent<HTMLAnchorElement>, data: Cat) => {
-    e.preventDefault();
-    setSelectedCat(data);
-    setSearchParams({ catID: data.id });
-  };
-  const handleDeselectCat = (e: MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    setSelectedCat(null);
-    setSearchParams({});
-  };
-
   return (
     <div>
       <LoaderWrapper isLoading={catsState.cats.length === 0}>
         <div className={styles.wrapper}>
           {catsState.cats?.map((cat) => (
-            <CatCard key={cat.id} {...cat} onSelectCat={handleSelectCat} />
+            <CatCard key={cat.id} {...cat} />
           ))}
         </div>
       </LoaderWrapper>
@@ -89,9 +63,7 @@ const Cats: FC = () => {
         </div>
       )}
 
-      {Boolean(selectedCat) && (
-        <CatModal {...(selectedCat as Cat)} isOpen={Boolean(selectedCat)} onDeselectCat={handleDeselectCat} />
-      )}
+      <Outlet />
     </div>
   );
 };

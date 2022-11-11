@@ -30,9 +30,3 @@
   object-fit: cover;
   height: max(10rem, 30vh);
 }
-
-.image {
-  width: 100%;
-  margin: 0 0 1rem;
-}
- 

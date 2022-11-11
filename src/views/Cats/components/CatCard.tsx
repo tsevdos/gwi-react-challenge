@@ -1,22 +1,15 @@
-import { FC, MouseEvent } from "react";
+import { FC } from "react";
+import { Link } from "react-router-dom";
 import { Cat } from "../../../types/cats";
+import { paths } from "../../../utils/constants";
 import styles from "./styles.module.css";
 
-type CatCardProps = Cat & {
-  onSelectCat: (e: MouseEvent<HTMLAnchorElement>, cat: Cat) => void;
-};
-
-const CatCard: FC<CatCardProps> = ({ onSelectCat, ...cat }) => {
-  const { id, url } = cat;
-  const handleSelectCat = (e: MouseEvent<HTMLAnchorElement>) => {
-    onSelectCat(e, cat);
-  };
-
+const CatCard: FC<Cat> = ({ id, url }) => {
   return (
     <div className={styles.card}>
-      <a href="!#" title={`cat ${id}`} onClick={handleSelectCat}>
+      <Link to={`${paths.cats}/${id}`} title={`cat ${id}`}>
         <img src={url} alt={`cat ${id}`} />
-      </a>
+      </Link>
     </div>
   );
 };

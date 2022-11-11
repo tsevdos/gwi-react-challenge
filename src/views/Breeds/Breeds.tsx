@@ -1,25 +1,26 @@
-import { useState, FC, MouseEvent } from "react";
+import { FC, useEffect } from "react";
+import { Outlet, useParams } from "react-router-dom";
 import { Typography } from "antd";
-import { ListItem, BreedsModal } from "./components/";
+import { ListItem } from "./components/";
 import { LoaderWrapper } from "../../components/";
-import { getBreeds } from "../../api/cats";
-import { Breed } from "../../types/";
 import { usePromise } from "../../hooks";
+import { getBreeds } from "../../api/cats";
+import useCatsStore from "../../stores/cats";
+import { Breed } from "../../types";
 
 const { Title } = Typography;
 
 const Breeds: FC = () => {
-  const [selectedBreed, setSelectedBreed] = useState<Breed | null>(null);
+  const { id } = useParams();
+  const { selectBreed } = useCatsStore();
   const { status, data: breeds } = usePromise(getBreeds);
 
-  const handleSelectBreed = (e: MouseEvent<HTMLAnchorElement>, data: Breed) => {
-    e.preventDefault();
-    setSelectedBreed(data);
-  };
-  const handleDeselectBreed = (e: MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    setSelectedBreed(null);
-  };
+  useEffect(() => {
+    if (id) {
+      const breed = breeds?.find((breed) => breed.id === id);
+      selectBreed(breed as Breed);
+    }
+  }, [id, breeds, selectBreed]);
 
   return (
     <div>
@@ -27,17 +28,12 @@ const Breeds: FC = () => {
       <LoaderWrapper status={status}>
         <ul>
           {breeds?.map((breed) => (
-            <ListItem key={breed.id} {...breed} onSelectBreed={handleSelectBreed} />
+            <ListItem key={breed.id} {...breed} />
           ))}
         </ul>
       </LoaderWrapper>
-      {Boolean(selectedBreed) && (
-        <BreedsModal
-          {...(selectedBreed as Breed)}
-          isOpen={Boolean(selectedBreed)}
-          onDeselectBreed={handleDeselectBreed}
-        />
-      )}
+
+      {status === "success" && <Outlet />}
     </div>
   );
 };
