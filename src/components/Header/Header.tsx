@@ -1,18 +1,18 @@
 import { FC } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Layout, Menu } from "antd";
-import { paths } from "../../utils/constants";
+import { URLS } from "../../utils/constants";
 
 const { Header } = Layout;
 
 const menuItems = [
   {
     key: "cats",
-    label: <Link to={paths.cats}>Cats</Link>,
+    label: <Link to={URLS.cats}>Cats</Link>,
   },
   {
     key: "breeds",
-    label: <Link to={paths.breeds}>Breeds</Link>,
+    label: <Link to={URLS.breeds}>Breeds</Link>,
   },
 ];
 
@@ -24,7 +24,7 @@ const AppHeader: FC = () => {
     <Header className="header">
       <div className="wrapper">
         <h1>
-          <Link to={paths.home}>GWI CatLover</Link>
+          <Link to={URLS.home}>GWI CatLover</Link>
         </h1>
         <Menu
           theme="dark"

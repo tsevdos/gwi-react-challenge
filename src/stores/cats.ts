@@ -4,8 +4,8 @@ import { Cat, Breed } from "../types/cats";
 type CatsState = {
   selectedCat: Cat | null;
   selectedBreed: Breed | null;
-  selectCat: (data: Cat) => void;
-  selectBreed: (data: Breed) => void;
+  selectCat: (data: Cat | null) => void;
+  selectBreed: (data: Breed | null) => void;
 };
 
 const useCatsStore = create<CatsState>((set, get) => ({

@@ -7,6 +7,7 @@ import { Loader, LoaderWrapper } from "../../components/";
 import { usePromise } from "../../hooks";
 import { Cat, CatsAPIOptions, Status } from "../../types";
 import styles from "./styles.module.css";
+import useCatsStore from "../../stores/cats";
 
 const randomCatsApiOptions = {
   page: 1,
@@ -15,12 +16,21 @@ const randomCatsApiOptions = {
 };
 
 const Cats: FC = () => {
+  const { selectCat } = useCatsStore();
   const [catsState, setCatsState] = useState<{
     status: Status;
     cats: Cat[];
   }>({ status: "loading", cats: [] });
   const [currentPage, setCurrentPage] = useState(randomCatsApiOptions.page);
   const { data: images } = usePromise(getRandomCats, randomCatsApiOptions);
+
+  useEffect(() => {
+    return () => {
+      // deselect card when component unmount
+      selectCat(null);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (images) {

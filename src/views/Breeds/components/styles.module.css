@@ -8,3 +8,7 @@
   object-fit: cover;
   height: max(10rem, 30vh);
 }
+
+.modalBody {
+  padding: 1.5rem 0 0;
+}

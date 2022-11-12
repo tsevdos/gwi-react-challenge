@@ -1,12 +1,12 @@
-import { FC, MouseEvent } from "react";
+import { FC } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Modal, Carousel, Typography } from "antd";
-import { LoaderWrapper } from "../../components";
-import { usePromise } from "../../hooks";
-import { getBreedImagesById } from "../../api/cats";
-import { paths } from "../../utils/constants";
+import { LoaderWrapper } from "../../../components";
+import { usePromise } from "../../../hooks";
+import { getBreedImagesById } from "../../../api/cats";
+import { URLS } from "../../../utils/constants";
 import styles from "./styles.module.css";
-import useCatsStore from "../../stores/cats";
+import useCatsStore from "../../../stores/cats";
 
 const { Title } = Typography;
 
@@ -15,8 +15,8 @@ const BreedsModal: FC = () => {
   const { id } = useParams();
   const { selectedBreed } = useCatsStore();
   const { status, data: breedImages } = usePromise(getBreedImagesById, id);
-  const handleDeselectBreed = (e: MouseEvent<HTMLElement>) => {
-    navigate(paths.breeds);
+  const handleDeselectBreed = () => {
+    navigate(URLS.breeds);
   };
 
   return (
@@ -26,7 +26,7 @@ const BreedsModal: FC = () => {
           {status === "success" &&
             breedImages?.map(({ id, url }) => (
               <div key={id}>
-                <Link to={`${paths.cats}?catID=${id}`}>
+                <Link to={URLS.createCatLink(id)}>
                   <img src={url} alt="my alt" className={styles.modalImage} />
                 </Link>
               </div>
