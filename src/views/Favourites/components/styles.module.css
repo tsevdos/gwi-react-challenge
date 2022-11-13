@@ -1,7 +1,7 @@
 .card {
   flex: 0 1 100%;
-  margin: 0 0 1.4rem;
-  background-color: #fff;
+  margin: 0 0 1.4rem 0;
+  background: #fff;
   border-radius: 0.5rem;
   box-shadow: 0.05rem 0.1rem 0.3rem -0.03rem rgba(0, 0, 0, 0.45);
 }
@@ -9,14 +9,14 @@
 @media (min-width: 576px) {
   .card {
     flex: 0 1 48%;
-    margin: 0 1% 1.4rem;
+    margin: 0 2% 1.4rem 0;
   }
 }
 
 @media (min-width: 1024px) {
   .card {
     flex: 0 1 31%;
-    margin: 0 1% 1.4rem;
+    margin: 0 2% 1.4rem 0;
   }
 }
 
@@ -31,7 +31,10 @@
   height: max(10rem, 30vh);
 }
 
+.cardBody {
+  padding: 1rem;
+}
+
 .image {
   width: 100%;
-  margin: 0 0 1rem;
 }

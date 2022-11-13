@@ -1,6 +1,6 @@
 import { client } from "./client";
 import { userID } from "../utils/constants";
-import { Breed, Cat, CatsAPIOptions } from "../types/cats";
+import { Breed, Cat, CatsAPIOptions, FavoriteCat } from "../types/cats";
 
 export const getRandomCats = async ({ page, limit, order }: CatsAPIOptions): Promise<Cat[]> => {
   const res = await client.get(`images/search?page=${page}&limit=${limit}&order=${order}`);
@@ -26,11 +26,23 @@ export const getBreedImagesById = async (breedID: string): Promise<Cat[]> => {
   return res.data;
 };
 
-export const postFavoriteCat = async (id: string): Promise<unknown> => {
+export const getFavorites = async (): Promise<FavoriteCat[]> => {
+  const res = await client.get(`favourites`);
+
+  return res.data;
+};
+
+export const postFavoriteCat = async (id: string): Promise<{ id: number; message: string }> => {
   const res = await client.post(`favourites`, {
     image_id: id,
     sub_id: userID,
   });
+
+  return res.data;
+};
+
+export const removeFromFavorites = async (id: string): Promise<{ message: string }> => {
+  const res = await client.delete(`favourites/${id}`);
 
   return res.data;
 };

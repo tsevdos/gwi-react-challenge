@@ -24,7 +24,7 @@ const Breeds: FC = () => {
 
   return (
     <div>
-      <Title level={2}>Breeds</Title>
+      <Title>Breeds</Title>
       <LoaderWrapper status={status}>
         <ul>
           {breeds?.map((breed) => (

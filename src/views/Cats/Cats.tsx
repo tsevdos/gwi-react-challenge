@@ -1,14 +1,15 @@
 import { FC, MouseEvent, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import { Button } from "antd";
+import { Button, Typography } from "antd";
 import { getRandomCats } from "../../api/cats";
 import { CatCard } from "./components/";
 import { Loader, LoaderWrapper } from "../../components/";
 import { usePromise } from "../../hooks";
 import { Cat, CatsAPIOptions, Status } from "../../types";
-import styles from "./styles.module.css";
 import useCatsStore from "../../stores/cats";
+import styles from "./styles.module.css";
 
+const { Title } = Typography;
 const randomCatsApiOptions = {
   page: 1,
   limit: 10,
@@ -54,6 +55,7 @@ const Cats: FC = () => {
 
   return (
     <div>
+      <Title>Cats</Title>
       <LoaderWrapper isLoading={catsState.cats.length === 0}>
         <div className={styles.wrapper}>
           {catsState.cats?.map((cat) => (

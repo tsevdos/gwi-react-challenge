@@ -1,4 +1,4 @@
-export const userID = "User-1234";
+export const userID = "l8ywxn";
 
 export const URLS = {
   home: "/",
@@ -6,4 +6,5 @@ export const URLS = {
   createCatLink: (catID: string): string => `/cats/${catID}`,
   breeds: "/breeds",
   createBreedLink: (breedID: string): string => `/breeds/${breedID}`,
+  favourites: "/favourites",
 } as const;

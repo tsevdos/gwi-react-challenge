@@ -10,6 +10,7 @@ body {
   display: flex;
   max-width: 1600px;
   margin: 0 auto;
+  padding: 0 50px;
 }
 
 .header h1 {
@@ -22,10 +23,27 @@ body {
   color: #fff;
 }
 
+.content {
+  display: flex;
+  align-items: center;
+}
+
 .inner-content {
   width: 100%;
-  padding: 25px 50px;
+  padding: 1rem;
   max-width: 1600px;
+}
+
+@media (min-width: 576px) {
+  .inner-content {
+    padding: 25px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .inner-content {
+    padding: 25px 50px;
+  }
 }
 
 footer {

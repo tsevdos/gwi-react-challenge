@@ -14,6 +14,10 @@ const menuItems = [
     key: "breeds",
     label: <Link to={URLS.breeds}>Breeds</Link>,
   },
+  {
+    key: "favourites",
+    label: <Link to={URLS.favourites}>Favourites</Link>,
+  },
 ];
 
 const AppHeader: FC = () => {

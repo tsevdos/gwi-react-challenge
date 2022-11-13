@@ -5,8 +5,9 @@ import { LoaderWrapper } from "../../../components";
 import useCatsStore from "../../../stores/cats";
 import { getCatById, postFavoriteCat } from "../../../api/cats";
 import { URLS } from "../../../utils/constants";
-import styles from "./styles.module.css";
+import { showNotification } from "../../../utils/notifications";
 import { Cat, Status } from "../../../types";
+import styles from "./styles.module.css";
 
 const { Title } = Typography;
 
@@ -48,8 +49,9 @@ const CatModal: FC = () => {
     setDisableBtn(true);
     try {
       await postFavoriteCat(id as string);
+      showNotification("success", "Added to favourites", "Successfully added to favourites...");
     } catch (err) {
-      console.log(err);
+      showNotification("error", "Opps something went wrong", "Please try again...");
     } finally {
       setDisableBtn(false);
     }
@@ -69,7 +71,7 @@ const CatModal: FC = () => {
               </Link>
             )}
             <Button type="primary" loading={disableBtn} onClick={markAsFavorite}>
-              Favourite
+              Add to favourites
             </Button>
           </div>
         )}
