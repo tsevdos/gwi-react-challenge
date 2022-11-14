@@ -1,11 +1,11 @@
 import { FC, useEffect } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import { Typography } from "antd";
-import { ListItem } from "./components/";
+import ListItem from "./components/ListItem";
 import { LoaderWrapper } from "../../components/";
+import useCatsStore from "../../stores/cats";
 import { usePromise } from "../../hooks";
 import { getBreeds } from "../../api/cats";
-import useCatsStore from "../../stores/cats";
 import { Breed } from "../../types";
 
 const { Title } = Typography;

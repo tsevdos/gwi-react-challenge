@@ -1,8 +1,8 @@
 import { FC, useEffect, useState } from "react";
 import { Typography, Alert } from "antd";
-import { usePromise } from "../../hooks";
-import CatCard from "./components/CatCard";
+import FavoriteCatCard from "./components/FavoriteCatCard";
 import { LoaderWrapper } from "../../components/";
+import { usePromise } from "../../hooks";
 import { getFavorites } from "../../api/cats";
 import { FavoriteCat } from "../../types";
 import styles from "./styles.module.css";
@@ -13,15 +13,14 @@ const Favourites: FC = () => {
   const [favoriteCats, setFavoriteCats] = useState<FavoriteCat[] | null>(null);
   const { status, data: originalFavorites } = usePromise(getFavorites);
   const removeFromFavoritesList = (id: number) => {
-    const newFavoriteCats = originalFavorites?.filter((catImg) => catImg.id !== id);
-    setFavoriteCats(newFavoriteCats as FavoriteCat[]);
+    const newFavoriteCats = favoriteCats?.filter((catImg) => catImg.id !== id) as FavoriteCat[];
+
+    setFavoriteCats(newFavoriteCats);
   };
 
   useEffect(() => {
     setFavoriteCats(originalFavorites);
   }, [originalFavorites, setFavoriteCats]);
-
-  console.log(favoriteCats);
 
   return (
     <div>
@@ -32,7 +31,7 @@ const Favourites: FC = () => {
       <LoaderWrapper status={status}>
         <div className={styles.wrapper}>
           {favoriteCats?.map((catImage) => (
-            <CatCard key={catImage.id} {...catImage} removeFromFavoritesList={removeFromFavoritesList} />
+            <FavoriteCatCard key={catImage.id} {...catImage} removeFromFavoritesList={removeFromFavoritesList} />
           ))}
         </div>
       </LoaderWrapper>

@@ -8,7 +8,7 @@ type CatsState = {
   selectBreed: (data: Breed | null) => void;
 };
 
-const useCatsStore = create<CatsState>((set, get) => ({
+const useCatsStore = create<CatsState>((set, _get) => ({
   selectedCat: null,
   selectedBreed: null,
   selectCat: (selectedCat): void => set((state) => ({ ...state, selectedCat })),

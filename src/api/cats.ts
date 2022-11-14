@@ -32,7 +32,7 @@ export const getFavorites = async (): Promise<FavoriteCat[]> => {
   return res.data;
 };
 
-export const postFavoriteCat = async (id: string): Promise<{ id: number; message: string }> => {
+export const addToFavorites = async (id: string): Promise<{ id: number; message: string }> => {
   const res = await client.post(`favourites`, {
     image_id: id,
     sub_id: userID,

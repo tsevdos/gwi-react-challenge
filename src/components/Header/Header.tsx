@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Layout, Menu } from "antd";
 import { URLS } from "../../utils/constants";
+import styles from "./styles.module.css";
 
 const { Header } = Layout;
 
@@ -25,18 +26,12 @@ const AppHeader: FC = () => {
   const selectedkey = pathname.split("/")[1];
 
   return (
-    <Header className="header">
-      <div className="wrapper">
+    <Header className={styles.header}>
+      <div className={styles.wrapper}>
         <h1>
           <Link to={URLS.home}>GWI CatLover</Link>
         </h1>
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          selectedKeys={[selectedkey]}
-          style={{ minWidth: 0, flex: "auto" }}
-          items={menuItems}
-        />
+        <Menu theme="dark" mode="horizontal" selectedKeys={[selectedkey]} items={menuItems} className={styles.menu} />
       </div>
     </Header>
   );

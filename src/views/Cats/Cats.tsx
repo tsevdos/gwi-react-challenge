@@ -1,12 +1,12 @@
 import { FC, MouseEvent, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Button, Typography } from "antd";
-import { getRandomCats } from "../../api/cats";
-import { CatCard } from "./components/";
+import CatCard from "./components/CatCard";
 import { Loader, LoaderWrapper } from "../../components/";
-import { usePromise } from "../../hooks";
-import { Cat, CatsAPIOptions, Status } from "../../types";
 import useCatsStore from "../../stores/cats";
+import { usePromise } from "../../hooks";
+import { getRandomCats } from "../../api/cats";
+import { Cat, CatsAPIOptions, Status } from "../../types";
 import styles from "./styles.module.css";
 
 const { Title } = Typography;
@@ -24,21 +24,6 @@ const Cats: FC = () => {
   }>({ status: "loading", cats: [] });
   const [currentPage, setCurrentPage] = useState(randomCatsApiOptions.page);
   const { data: images } = usePromise(getRandomCats, randomCatsApiOptions);
-
-  useEffect(() => {
-    return () => {
-      // deselect card when component unmount
-      selectCat(null);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (images) {
-      setCatsState((state) => ({ status: "success", cats: [...state.cats, ...images] }));
-    }
-  }, [images]);
-
   const fetchNextPage = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const nextPage = currentPage + 1;
@@ -52,6 +37,17 @@ const Cats: FC = () => {
       setCatsState((state) => ({ ...state, status: "error" }));
     }
   };
+
+  useEffect(() => {
+    return () => selectCat(null); // deselect cat modal on component unmount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (images) {
+      setCatsState((state) => ({ status: "success", cats: [...state.cats, ...images] }));
+    }
+  }, [images]);
 
   return (
     <div>

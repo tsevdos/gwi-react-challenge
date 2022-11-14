@@ -5,10 +5,9 @@ import { showNotification } from "../../../utils/notifications";
 import { FavoriteCat } from "../../../types";
 import styles from "./styles.module.css";
 
-const CatCard: FC<FavoriteCat & { removeFromFavoritesList: (id: number) => void }> = ({
-  removeFromFavoritesList,
-  ...catImage
-}) => {
+type FavoriteCatCardProps = FavoriteCat & { removeFromFavoritesList: (id: number) => void };
+
+const FavoriteCatCard: FC<FavoriteCatCardProps> = ({ removeFromFavoritesList, ...catImage }) => {
   const [btnIsLoading, setBtnIsLoading] = useState(false);
   const handleRemoveFromFavorites = async () => {
     setBtnIsLoading(true);
@@ -35,4 +34,4 @@ const CatCard: FC<FavoriteCat & { removeFromFavoritesList: (id: number) => void 
   );
 };
 
-export default CatCard;
+export default FavoriteCatCard;

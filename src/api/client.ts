@@ -1,6 +1,5 @@
 import axios from "axios";
 
-//  REST API client configuration
 export const client = axios.create({
   baseURL: "https://api.thecatapi.com/v1/",
   headers: {
