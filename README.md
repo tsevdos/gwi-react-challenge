@@ -1,46 +1,56 @@
-# Getting Started with Create React App
+# GlobalWebIndex engineering challenge (CatLover app)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## App details
 
-## Available Scripts
+The application is using the below technologies:
 
-In the project directory, you can run:
+- [TypeScript](https://www.typescriptlang.org/) - for static (strong) typing
+- [React](https://facebook.github.io/react/) - for building the client-side app and components
+- [React Router](https://reactrouter.com/en/main) - for client-side routing
+- [Ant Design](https://ant.design/) - for UI library and design system
+- [axios](https://axios-http.com/docs/intro) - a promise-based HTTP Client
+- [zustand](https://zustand-demo.pmnd.rs/) - for global state management
+- [CSS modules](https://github.com/css-modules/css-modules) - for CSS styling
+- [Jest](https://jestjs.io/) - for test runner, mocks and assertions
+- [React Testing Library](https://testing-library.com/react) - for component unit and integration testing
+- [Cypress](https://testing-library.com/react) - for end-to-end testing
 
-### `npm start`
+## Run locally
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+You need to have node.js installed. For development I used node version 16.18.0 and npm version 8.19.2, but you can use any node version (above 14). When you are ready you can install all dependencies and run the development server by typing the below commands:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```shell
+npm install
+npm start
+open http://localhost:3000
+```
 
-### `npm test`
+Keep in mind that you should not run any process on port `3000`. Feel free to change these options from the `scripts` section of `package.json` if you want to.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Run tests
 
-### `npm run build`
+Please keep in mind that in order to run the end to end tests you must run the app on `http://localhost:3000`.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Run all tests (unit and end to end):
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```shell
+npm test
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Run unit tests:
 
-### `npm run eject`
+```shell
+npm run test:unit
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Run end to end tests (make sure the app is running):
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```shell
+npm run test:e2e
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+You can also run and inspect the integration tests using the cypress UI by typing
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```shell
+npm run test:e2e:ui
+```

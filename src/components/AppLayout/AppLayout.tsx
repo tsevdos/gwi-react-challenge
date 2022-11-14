@@ -15,13 +15,7 @@ const AppLayout: FC<AppLayoutProps> = ({ children }) => (
     <Layout className={styles.content}>
       <Content className={styles.innerContent}>
         {children}
-        <footer className={styles.footer}>
-          Made with{" "}
-          <span role="img" aria-label="love">
-            ❤️
-          </span>{" "}
-          in Athens, Greece.
-        </footer>
+        <footer className={styles.footer}>Made with ❤️ in Athens, Greece.</footer>
       </Content>
     </Layout>
   </Layout>

@@ -13,7 +13,7 @@ const CatCard: FC<Cat> = (props) => {
   };
 
   return (
-    <div className={styles.card}>
+    <div className={styles.card} data-testid="cat-card">
       <Link to={URLS.createCatLink(id)} title={`cat ${id}`} onClick={handleSelectCat}>
         <img src={url} alt={`cat ${id}`} />
       </Link>
