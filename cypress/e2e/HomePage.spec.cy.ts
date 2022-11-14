@@ -1,7 +1,7 @@
 describe("Home page", () => {
   it("successfully loads", () => {
     cy.visit("/");
-    cy.get(".ant-layout-content").contains("GlobalWebIndex Engineering Challenge");
+    cy.get(".ant-layout-content").contains("GWI Engineering Challenge");
     cy.get(".ant-layout-content").contains("CatLover");
     cy.get(".ant-layout-content").contains("App details");
   });

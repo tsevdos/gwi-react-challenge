@@ -12,7 +12,6 @@ The application is using the below technologies:
 - [zustand](https://zustand-demo.pmnd.rs/) - for global state management
 - [CSS modules](https://github.com/css-modules/css-modules) - for CSS styling
 - [Jest](https://jestjs.io/) - for test runner, mocks and assertions
-- [React Testing Library](https://testing-library.com/react) - for component unit and integration testing
 - [Cypress](https://testing-library.com/react) - for end-to-end testing
 
 ## Run locally
@@ -31,26 +30,19 @@ Keep in mind that you should not run any process on port `3000`. Feel free to ch
 
 Please keep in mind that in order to run the end to end tests you must run the app on `http://localhost:3000`.
 
-### Run all tests (unit and end to end):
+### Run end-to-end tests in CLI:
 
 ```shell
 npm test
 ```
 
-### Run unit tests:
+### Open Cypress UI (to inspect end-to-end tests):
 
 ```shell
-npm run test:unit
+npm run test:ui
 ```
 
-### Run end to end tests (make sure the app is running):
+## Where are the other tests (end to end, unit and integration)?
 
-```shell
-npm run test:e2e
-```
-
-You can also run and inspect the integration tests using the cypress UI by typing
-
-```shell
-npm run test:e2e:ui
-```
+Unfortunately I didn't have much time to create a complete set of tests. Feel free to view the tests I've written at my [npm packages](https://www.npmjs.com/~tsevdos), specifically the [Gnosis Design System](https://github.com/epignosis/gnosis),
+[Gr Utils](https://github.com/tsevdos/npm-packages/tree/main/packages/gr-utils), [Greek in tech](https://github.com/tsevdos/npm-packages/tree/main/packages/greek-in-tech) and the not supported anymore [React validatus](https://github.com/tsevdos/react-validatus/blob/master/src/index.test.js).
